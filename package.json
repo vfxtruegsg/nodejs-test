@@ -1,0 +1,35 @@
+{
+  "name": "nodejs-basic",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "lint": "eslint src/**/*.js",
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.js ",
+    "server": "nodemon src/server.js",
+    "db": "nodemon src/db/initMongoDB.js"
+  },
+  "keywords": [],
+  "author": "Andrij Popkov <andrijpopkov565@gmail.com>",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@eslint/js": "^9.20.0",
+    "eslint": "^9.20.1",
+    "globals": "^15.15.0",
+    "nodemon": "^3.1.9",
+    "pino-pretty": "^13.0.0"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "http-errors": "^2.0.0",
+    "mongodb": "^6.13.1",
+    "mongoose": "^8.10.1",
+    "pino-http": "^10.4.0"
+  }
+}
