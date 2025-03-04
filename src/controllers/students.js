@@ -4,6 +4,7 @@ import {
   getAllStudents,
   getStudentById,
   deleteStudent,
+  updateStudent,
 } from '../services/students.js';
 
 export const getStudentsController = async (req, res) => {
@@ -57,5 +58,23 @@ export const deleteStudentController = async (req, res, next) => {
   res.status(204).json({
     status: 204,
     message: 'Student deleted!',
+  });
+};
+
+export const upsertStudentController = async (req, res, next) => {
+  const { studentId } = req.params;
+
+  const result = await updateStudent(studentId, req.body, { upsert: true });
+
+  if (!result) {
+    next(createHttpError(404, 'Student not found!'));
+  }
+
+  const status = result.isNew ? 200 : 201;
+
+  res.status(status).json({
+    status,
+    message: 'Succesfully upserted a student!',
+    data: result.student,
   });
 };
