@@ -6,9 +6,14 @@ import {
   deleteStudent,
   updateStudent,
 } from '../services/students.js';
+import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 
 export const getStudentsController = async (req, res) => {
-  const students = await getAllStudents();
+  const { page, perPage } = parsePaginationParams(req.query);
+  const students = await getAllStudents({
+    page,
+    perPage,
+  });
 
   if (!students) {
     return res.status(404).json({ message: 'Students not found!' });
@@ -76,5 +81,22 @@ export const upsertStudentController = async (req, res, next) => {
     status,
     message: 'Succesfully upserted a student!',
     data: result.student,
+  });
+};
+
+export const patchStudentController = async (req, res, next) => {
+  const { studentId } = req.params;
+
+  const result = await updateStudent(studentId, req.body);
+
+  if (!result) {
+    next(createHttpError(404, 'Student not found!'));
+    return;
+  }
+
+  res.json({
+    status: 200,
+    message: 'Succedfully patched a student!',
+    data: result,
   });
 };
